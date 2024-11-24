@@ -5,11 +5,8 @@ import com.fikir.zikirsayar.service.ZikirService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
@@ -25,8 +22,22 @@ private ZikirService zikirService;
 
 @GetMapping()
 public ResponseEntity<List<ZikirEntity>> getZikirs(){
-    List zikirs = zikirService.getZikirs();
+    List<ZikirEntity> zikirs = zikirService.getZikirs();
     return new ResponseEntity<>(zikirs, HttpStatus.OK);
 }
+
+
+
+@PostMapping()
+public ResponseEntity<ZikirEntity> postZikir(@RequestBody ZikirEntity zikir){
+if(zikir.getId() != null){
+  ZikirEntity ze = this.zikirService.updateZikir(zikir);
+    return new ResponseEntity<>(ze, HttpStatus.OK);
+} else {
+    this.zikirService.setZikir(zikir);
+    return new ResponseEntity<>(zikir, HttpStatus.CREATED);
+}
+}
+
 
 }

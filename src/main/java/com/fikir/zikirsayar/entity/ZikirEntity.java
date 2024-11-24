@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import jakarta.persistence.*;
 
+import java.util.Date;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,4 +25,7 @@ public class ZikirEntity {
 
     @Column(name="amount", nullable = false)
     Integer amount;
+
+    @Column(name="date", nullable=false)
+    Date date;
 }
