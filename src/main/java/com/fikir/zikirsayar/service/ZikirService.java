@@ -1,5 +1,6 @@
 package com.fikir.zikirsayar.service;
 
+import com.fikir.zikirsayar.entity.ZikirDTO;
 import com.fikir.zikirsayar.entity.ZikirEntity;
 import com.fikir.zikirsayar.repository.ZikirRepository;
 import lombok.AllArgsConstructor;
@@ -19,20 +20,19 @@ public class ZikirService {
         return this.repo.findAll();
     }
 
-    public void setZikir(ZikirEntity zikir){
-        this.repo.save(zikir);
-    }
-
-    public ZikirEntity getZikir(Long id){
+    public ZikirEntity getZikir(Long id) {
         return this.repo.findById(id).orElseThrow(()-> new ResourceNotFoundException("There is no data related to given ID"));
     }
 
-    public ZikirEntity updateZikir(ZikirEntity zk){
+    public ZikirDTO updateZikir(ZikirDTO zk) {
         ZikirEntity zkDb = this.getZikir(zk.getId());
-        zkDb.setName(zk.getName());
-        zkDb.setAmount(zk.getAmount());
-        zkDb.setDate(zk.getDate());
+        zkDb.setAmount(zk.getAmount() + zkDb.getAmount());
+        zkDb.setCycle(zk.getCycle());
         this.repo.save(zkDb);
-        return zkDb;
+        return zkDb.toDto();
+    }
+
+    public ZikirEntity saveZikir(ZikirEntity zikir) {
+        return this.repo.save(zikir);
     }
 }
