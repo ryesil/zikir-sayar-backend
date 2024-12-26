@@ -11,7 +11,7 @@ public class AuthService {
 
 
     public boolean validatePassword(String password) {
-        if(!password.equals("I am Admin")){
+        if(!password.equals("ArapFaik")){
             return false;
         } else {
             return true;
