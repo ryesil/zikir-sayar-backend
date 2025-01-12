@@ -24,12 +24,13 @@ public class ZikirService {
         return this.repo.findById(id).orElseThrow(()-> new ResourceNotFoundException("There is no data related to given ID"));
     }
 
-    public ZikirDTO updateZikir(ZikirDTO zk) {
+    public void updateZikir(ZikirDTO zk) {
         ZikirEntity zkDb = this.getZikir(zk.getId());
-        zkDb.setAmount(zk.getAmount() + zkDb.getAmount());
-        zkDb.setCycle(zk.getCycle());
-        this.repo.save(zkDb);
-        return zkDb.toDto();
+        if(zkDb != null){
+            int amount = zk.getAmount() + zkDb.getAmount();
+            zkDb.setAmount(amount);
+            this.repo.save(zkDb);
+        }
     }
 
     public ZikirEntity saveZikir(ZikirEntity zikir) {

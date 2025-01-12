@@ -30,14 +30,20 @@ public class ZikirController {
         return ResponseEntity.ok(zikirs);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ZikirEntity> getZikir(@PathVariable Long id) {
+        ZikirEntity zikir = zikirService.getZikir(id);
+        return ResponseEntity.ok(zikir);
+    }
+
     @PutMapping("/{id}")
-    public ResponseEntity<ZikirDTO> updateZikir(@PathVariable Long id, @RequestBody ZikirDTO zikir) throws IllegalArgumentException {
+    public ResponseEntity updateZikir(@PathVariable Long id, @RequestBody ZikirDTO zikir) throws IllegalArgumentException {
         if (id == null || !id.equals(zikir.getId())) {
             log.error("Mismatch or missing ID: Path ID = {}, Zikir ID = {}", id, zikir.getId());
             throw new IllegalArgumentException("Path ID doesn't match with Zikir ID or is missing");
         }
-        ZikirDTO updatedZikir = zikirService.updateZikir(zikir);
-        return ResponseEntity.ok(updatedZikir);
+        zikirService.updateZikir(zikir);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping

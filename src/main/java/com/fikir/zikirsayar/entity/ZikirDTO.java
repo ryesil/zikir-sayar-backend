@@ -13,11 +13,9 @@ public class ZikirDTO {
 
     private Long id;
     private Integer amount;
-    private Integer cycle;
 
     public ZikirDTO(ZikirEntity zkr){
         this.id = zkr.getId();
         this.amount = zkr.getAmount();
-        this.cycle = zkr.getCycle();
     }
 }
